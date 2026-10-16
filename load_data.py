@@ -3,13 +3,13 @@ import csv
 
 ds = ld("Lichess/chess-position-evaluations", split="train", streaming=True)
 
-max_rows = 1000000
+max_rows = 150000 
 best = {}
 
 print("Loading data...")
 
 for i, row in enumerate(ds):
-    if i >= max_rows: break
+    if len(best) >= max_rows: break
 
     fen, depth = row["fen"], row["depth"]
     if fen in best and best[fen][0] >= depth:
