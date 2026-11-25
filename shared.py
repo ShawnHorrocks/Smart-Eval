@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 
 N_COLS = 769
+SEED = 14
 
 def translate_fen(fen):
     board = chess.Board(fen)
@@ -31,3 +32,14 @@ def load_train_data():
     np.savez("data/train.npz", X=X, y=y)
 
     return X, y
+
+def split_data(n=None, seed=SEED):
+    X, y = load_train_data()
+    random = np.random.default_rng(seed)
+    idx = random.permutation(len(X))
+    if n is not None:
+        idx = idx[:n]
+    cut = int(len(idx) * .8)
+    train = idx[:cut]
+    val = idx[cut:]
+    return X[train], y[train], X[val], y[val]
