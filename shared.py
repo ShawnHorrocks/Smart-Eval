@@ -43,3 +43,9 @@ def split_data(n=None, seed=SEED):
     train = idx[:cut]
     val = idx[cut:]
     return X[train], y[train], X[val], y[val]
+
+def compute_accuracy(pred_y, true_y):
+    mae = np.mean(np.abs(pred_y - true_y))
+    r2 = 1 - np.mean((pred_y - true_y) ** 2) / np.var(true_y)
+
+    return mae, r2
