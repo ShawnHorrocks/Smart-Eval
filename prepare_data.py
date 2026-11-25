@@ -2,6 +2,7 @@ from datasets import load_dataset as ld
 import csv
 
 ds = ld("Lichess/chess-position-evaluations", split="train", streaming=True)
+ds = ds.shuffle(seed=42, buffer_size=100_000)
 
 max_rows = 170000 
 best = {}
